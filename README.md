@@ -31,7 +31,7 @@ i.e.
 
 ```javascript
 var options = {
-    file: '/wavs/arnold.wav'
+    file: '/wavs/arnold/whoisyourdaddy.wav'
   , lang: 'en-US'
   , clipSize: 45
   , maxRequests: 20
