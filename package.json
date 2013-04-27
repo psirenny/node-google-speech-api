@@ -1,0 +1,29 @@
+{
+  "dependencies": {
+    "async": "*",
+    "request": "*",
+    "underscore": "*",
+    "underscore.string": "*"
+  },
+  "name": "google-speech-api",
+  "version": "0.0.0",
+  "description": "Google Speech API wrapper for node",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/psirenny/node-google-speech-api.git"
+  },
+  "keywords": [
+    "node",
+    "google",
+    "speech",
+    "api"
+  ],
+  "author": "psirenny",
+  "license": "BSD",
+  "readmeFilename": "README.md",
+  "gitHead": "a5094705349adf734ca3c9f8a2accfb4db2fbd04"
+}
