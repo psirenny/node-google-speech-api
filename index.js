@@ -4,21 +4,26 @@ var _ = require('underscore')
   , exec = require('child_process').exec
   , fs = require('fs')
   , path = require('path')
+  , qs = require('qs')
   , request = require('request');
 
 module.exports = function (options, callback) {
-  options = _.defaults(options, {
+  var params = {
       client: 'chromium'
-    , clipSize: 60
     , lang: 'en-US'
-    , maxRequests: 4
     , maxResults: 1
+    , pfilter: 1
+    , xjerr: 1
+  }
+
+  options = _.defaults(options, params, {
+      clipSize: 60
+    , maxRequests: 1
     , sampleRate: 16000
   });
 
   var headers = {'content-type': 'audio/x-flac; rate=' + options.sampleRate}
-    , base = 'https://www.google.com/speech-api/v1/recognize?client=%s&lang=%s&maxresults=%s'
-    , url = _s.sprintf(base, options.client, options.lang, options.maxResults);
+    , url = 'https://www.google.com/speech-api/v1/recognize?' + qs.stringify(params);
 
   var getSpeech = function (file, callback) {
     var stats = fs.statSync(file)
