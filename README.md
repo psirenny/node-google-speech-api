@@ -27,7 +27,7 @@ You can specify several options:
 * clipSize — The audio duration of files sent to google (in seconds.) Larger files will be broken into pieces. (defaults to 60)
 * maxRequests — The maximum number of clips to send to google at a time. (defaults to 4)
 * sampleRate — The sample rate of the audio sent to google.
-* xjerr — Return errors as part of JSON response if set to 1, otherwise return error as HTTP error code. (defaults to 1)
+* xjerr — Return errors as part of the JSON response if set to 1, otherwise returns errors as HTTP error codes. (defaults to 1)
 
 i.e.
 
