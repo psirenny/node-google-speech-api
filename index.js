@@ -26,13 +26,10 @@ module.exports = function (options, callback) {
     , url = 'https://www.google.com/speech-api/v1/recognize?' + qs.stringify(params);
 
   var getSpeech = function (file, callback) {
-    var stats = fs.statSync(file)
-      , buf = new Buffer(stats.size);
+    fs.readFile(file, function (err, data) {
+      if (err) return callback(err);
 
-    fs.open(file, 'r', function (status, fd) {
-      fs.readSync(fd, buf, 0, stats.size, 0);
-
-      request.post({body: buf, headers: headers, url: url},
+      request.post({body: data, headers: headers, url: url},
         function (err, res, body) {
           if (err) return callback(err);
 
@@ -45,7 +42,7 @@ module.exports = function (options, callback) {
           finally {
             fs.unlink(file);
           }
-        });
+      });
     });
   };
 
