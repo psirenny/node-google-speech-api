@@ -36,8 +36,8 @@ module.exports = function (options, callback) {
           try {
             callback(null, JSON.parse(body));
           }
-          catch (err) {
-            callback(err);
+          catch (e) {
+            callback(e);
           }
           finally {
             fs.unlink(file);
