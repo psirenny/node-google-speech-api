@@ -18,7 +18,7 @@ module.exports = function (options, callback) {
 
   options = _.defaults(options, params, {
       clipSize: 60
-    , maxRequests: 1
+    , maxRequests: 4
     , sampleRate: 16000
   });
 
