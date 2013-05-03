@@ -5,7 +5,8 @@ var _ = require('underscore')
   , fs = require('fs')
   , path = require('path')
   , qs = require('qs')
-  , request = require('request');
+  , request = require('request')
+  , temp = require('temp');
 
 module.exports = function (options, callback) {
   var params = {
@@ -17,7 +18,7 @@ module.exports = function (options, callback) {
   }
 
   options = _.defaults(options, params, {
-      clipSize: 60
+      clipSize: 15
     , maxRequests: 4
     , sampleRate: 16000
   });
@@ -32,6 +33,7 @@ module.exports = function (options, callback) {
       request.post({body: data, headers: headers, url: url},
         function (err, res, body) {
           if (err) return callback(err);
+          if (_s.contains(body, 'HTML')) return callback(body);
 
           try {
             callback(null, JSON.parse(body));
@@ -52,24 +54,31 @@ module.exports = function (options, callback) {
   exec(cmd, function (err, duration) {
     if (err) return callback(err);
 
-    // normalize audio, split into 60 second sound clips
-    var output = _s.rtrim(options.file, path.extname(options.file))
-      , base = 'sox "%s" -r %d "%s%%1n.flac" gain -n -5 silence 1 5 2%% trim 0 %d : newfile : restart'
-      , cmd = _s.sprintf(base, options.file, options.sampleRate, output, options.clipSize);
+    // normalize audio
+    var output = temp.path();
+    cmd = _s.sprintf('sox "%s" -r %d "%s.flac" gain -n -5 silence 1 5 2%%', options.file, options.sampleRate, output);
 
     exec(cmd, function (err) {
       if (err) return callback(err);
 
-      var files = []
-        , count = Math.ceil(duration / options.clipSize);
+      // split into 15 second sound clips
+      cmd = _s.sprintf('sox "%s.flac" "%s%%1n.flac" trim 0 %d : newfile : restart', output, output, options.clipSize);
 
-      // push sound clip file names to array
-      _.times(count, function (n) {
-        files.push(output + (n + 1) + '.flac');
+      exec(cmd, function (err) {
+        fs.unlink(output + '.flac');
+        if (err) return callback(err);
+
+        var files = []
+          , count = Math.ceil(duration / options.clipSize);
+
+        // push sound clip file names to array
+        _.times(count, function (n) {
+          files.push(output + (n + 1) + '.flac');
+        });
+
+        // get speech for each sound clip
+        async.mapLimit(files, options.maxRequests, getSpeech, callback);
       });
-
-      // get speech for each sound clip
-      async.mapLimit(files, options.maxRequests, getSpeech, callback);
     });
   });
 };

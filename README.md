@@ -24,7 +24,7 @@ You can specify several options:
 * lang — The spoken language in the file. (defaults to "en-US")
 * maxResults — The maximum number of hypotheses returned by google. (defaults to 1)
 * pfilter — Filter profanity by replacing flagged words with pound symbols. Set 0 to unfilter. (defaults to 1)
-* clipSize — The audio duration of files sent to google (in seconds.) Larger files will be broken into pieces. (defaults to 60)
+* clipSize — The audio duration of files sent to google (in seconds.) Larger files will be broken into pieces. (defaults to 15)
 * maxRequests — The maximum number of clips to send to google at a time. (defaults to 4)
 * sampleRate — The sample rate of the audio sent to google.
 * xjerr — Return errors as part of the JSON response if set to 1, otherwise returns errors as HTTP error codes. (defaults to 1)

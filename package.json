@@ -3,6 +3,7 @@
     "async": "*",
     "qs": "*",
     "request": "*",
+    "temp": "*",
     "underscore": "*",
     "underscore.string": "*"
   },
