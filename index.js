@@ -15,7 +15,9 @@ module.exports = function (options, callback) {
     , maxResults: 1
     , pfilter: 1
     , xjerr: 1
-  }
+  };
+
+  params = _.extend(params, _.pick.apply(this, [options].concat(_.keys(params))));
 
   options = _.defaults(options, params, {
       clipSize: 15
