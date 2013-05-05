@@ -29,8 +29,6 @@ You can specify several options:
 * sampleRate — The sample rate of the audio sent to google. (defaults to 16000)
 * xjerr — Return errors as part of the JSON response if set to 1, otherwise returns errors as HTTP error codes. (defaults to 1)
 
-i.e.
-
 ```javascript
 var options = {
     file: '/wavs/arnold/whoisyourdaddy.wav'
