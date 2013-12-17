@@ -66,7 +66,6 @@ module.exports = function (options, callback) {
 
       // split into 15 second sound clips
       cmd = sprintf('sox "%s.flac" "%s%%1n.flac" trim 0 %d : newfile : restart', output, output, options.clipSize);
-      console.log(cmd);
 
       exec(cmd, function (err) {
         fs.unlink(output + '.flac');
