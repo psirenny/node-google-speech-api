@@ -1,11 +1,11 @@
-var _ = require('underscore')
-  , _s = require('underscore.string')
+var _ = require('lodash')
   , async = require('async')
   , exec = require('child_process').exec
   , fs = require('fs')
   , path = require('path')
   , qs = require('qs')
   , request = require('request')
+  , sprintf = require('sprintf').sprintf
   , temp = require('temp');
 
 module.exports = function (options, callback) {
@@ -35,7 +35,8 @@ module.exports = function (options, callback) {
       request.post({body: data, headers: headers, url: url},
         function (err, res, body) {
           if (err) return callback(err);
-          if (_s.contains(body, 'HTML')) return callback(body);
+          if (!!~body.toLowerCase().indexOf('html')) return callback(body);
+          body = '[' + _(body.split('\n')).compact().join(',') + ']';
 
           try {
             callback(null, JSON.parse(body));
@@ -51,20 +52,21 @@ module.exports = function (options, callback) {
   };
 
   // get audio duration
-  var cmd = _s.sprintf('sox --i -D %s', options.file);
+  var cmd = sprintf('sox --i -D %s', options.file);
 
   exec(cmd, function (err, duration) {
     if (err) return callback(err);
 
     // normalize audio
     var output = temp.path();
-    cmd = _s.sprintf('sox "%s" -r %d "%s.flac" gain -n -5 silence 1 5 2%%', options.file, options.sampleRate, output);
+    cmd = sprintf('sox "%s" -r %d "%s.flac" gain -n -5 silence 1 5 2%%', options.file, options.sampleRate, output);
 
     exec(cmd, function (err) {
       if (err) return callback(err);
 
       // split into 15 second sound clips
-      cmd = _s.sprintf('sox "%s.flac" "%s%%1n.flac" trim 0 %d : newfile : restart', output, output, options.clipSize);
+      cmd = sprintf('sox "%s.flac" "%s%%1n.flac" trim 0 %d : newfile : restart', output, output, options.clipSize);
+      console.log(cmd);
 
       exec(cmd, function (err) {
         fs.unlink(output + '.flac');

@@ -1,31 +1,35 @@
 {
+  "author": "psirenny",
   "dependencies": {
     "async": "*",
+    "lodash": "*",
     "qs": "*",
     "request": "*",
-    "temp": "*",
-    "underscore": "*",
-    "underscore.string": "*"
+    "sprintf": "*",
+    "temp": "*"
   },
-  "name": "google-speech-api",
-  "version": "0.2.1",
   "description": "Google Speech API wrapper for node",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "devDependencies": {
+    "chai": "*",
+    "mocha": "*"
   },
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/psirenny/node-google-speech-api.git"
-  },
+  "gitHead": "a5094705349adf734ca3c9f8a2accfb4db2fbd04",
   "keywords": [
     "node",
     "google",
     "speech",
     "api"
   ],
-  "author": "psirenny",
-  "license": "BSD",
+  "license": "MIT",
+  "main": "index.js",
+  "name": "google-speech-api",
   "readmeFilename": "README.md",
-  "gitHead": "a5094705349adf734ca3c9f8a2accfb4db2fbd04"
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/psirenny/node-google-speech-api.git"
+  },
+  "scripts": {
+    "test": "./node_modules/.bin/mocha test"
+  },
+  "version": "0.2.2"
 }
