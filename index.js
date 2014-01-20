@@ -52,7 +52,7 @@ module.exports = function (options, callback) {
   };
 
   // get audio duration
-  var cmd = sprintf('sox --i -D %s', options.file);
+  var cmd = sprintf('sox --i -D "%s"', options.file);
 
   exec(cmd, function (err, duration) {
     if (err) return callback(err);
