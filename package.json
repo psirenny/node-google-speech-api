@@ -5,7 +5,6 @@
     "lodash": "*",
     "qs": "*",
     "request": "*",
-    "sprintf": "*",
     "temp": "*"
   },
   "description": "Google Speech API wrapper for node",

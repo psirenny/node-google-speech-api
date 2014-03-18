@@ -5,8 +5,8 @@ var _ = require('lodash')
   , path = require('path')
   , qs = require('qs')
   , request = require('request')
-  , sprintf = require('sprintf').sprintf
-  , temp = require('temp');
+  , temp = require('temp')
+  , util = require('util')
 
 module.exports = function (options, callback) {
   var params = {
@@ -56,20 +56,20 @@ module.exports = function (options, callback) {
   };
 
   // get audio duration
-  var cmd = sprintf('sox --i -D "%s"', options.file);
+  var cmd = util.format('sox --i -D "%s"', options.file);
 
   exec(cmd, function (err, duration) {
     if (err) return callback(err);
 
     // normalize audio
     var output = temp.path();
-    cmd = sprintf('sox "%s" -r %d "%s.flac" gain -n -5 silence 1 5 2%%', options.file, options.sampleRate, output);
+    cmd = util.format('sox "%s" -r %d "%s.flac" gain -n -5 silence 1 5 2%%', options.file, options.sampleRate, output);
 
     exec(cmd, function (err) {
       if (err) return callback(err);
 
       // split into 15 second sound clips
-      cmd = sprintf('sox "%s.flac" "%s%%1n.flac" trim 0 %d : newfile : restart', output, output, options.clipSize);
+      cmd = util.format('sox "%s.flac" "%s%%1n.flac" trim 0 %d : newfile : restart', output, output, options.clipSize);
 
       exec(cmd, function (err) {
         fs.unlink(output + '.flac');
