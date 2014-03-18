@@ -22,6 +22,7 @@ module.exports = function (options, callback) {
   }
 
   params = _.extend(params, _.pick.apply(this, [options].concat(_.keys(params))));
+  params.pfilter = params.pfilter ? 1 : 0;
 
   options = _.defaults(options, params, {
     clipSize: 15,
