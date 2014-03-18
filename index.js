@@ -17,6 +17,10 @@ module.exports = function (options, callback) {
     , xjerr: 1
   };
 
+  if (typeof options === 'string') {
+    options = {file: options};
+  }
+
   params = _.extend(params, _.pick.apply(this, [options].concat(_.keys(params))));
 
   options = _.defaults(options, params, {
