@@ -10,7 +10,7 @@ Usage
 ```javascript
 var speech = require('google-speech-api');
 
-speech({file: '/path/to/audio/file'}, function (err, results) {
+speech('/path/to/audio/file', function (err, results) {
   console.log(results);
   // [{status: 0, id: '...', hypotheses: [{utterance: 'this is a test', confidence: 0.9162679}]}]}]
 });
@@ -31,10 +31,10 @@ You can specify several options:
 
 ```javascript
 var options = {
-    file: '/wavs/arnold/whoisyourdaddy.wav'
-  , lang: 'en-US'
-  , clipSize: 45
-  , maxRequests: 20
+  file: '/wavs/arnold/whoisyourdaddy.wav',
+  lang: 'en-US',
+  clipSize: 45,
+  maxRequests: 20
 }
 
 speech(options, function (err, results) {
