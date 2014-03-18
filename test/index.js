@@ -1,6 +1,9 @@
 var path = require('path')
   , should = require('chai').should()
-  , speech = require('../index');
+  , speech = require('../index')
+  , en = path.join(__dirname, 'fixtures/en.mp3')
+  , es = path.join(__dirname, 'fixtures/es.mp3')
+  , profanity = path.join(__dirname, 'fixtures/profanity.mp3');
 
 function check(text, done) {
   return function (err, res) {
@@ -16,10 +19,6 @@ function check(text, done) {
 }
 
 describe('speech', function () {
-  var en = path.join(__dirname, 'fixtures/en.mp3')
-    , es = path.join(__dirname, 'fixtures/es.mp3')
-    , profanity = path.join(__dirname, 'fixtures/profanity.mp3');
-
   it('should be a function', function () {
     speech.should.be.a('function');
   });
