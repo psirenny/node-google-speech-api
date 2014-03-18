@@ -40,7 +40,7 @@ module.exports = function (options, callback) {
         function (err, res, body) {
           if (err) return callback(err);
           if (!!~body.toLowerCase().indexOf('html')) return callback(body);
-          body = '[' + _(body.split('\n')).compact().join(',') + ']';
+          body = _(body.split('\n')).compact().join(',');
 
           try {
             callback(null, JSON.parse(body));
