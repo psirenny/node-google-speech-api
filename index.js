@@ -10,11 +10,11 @@ var _ = require('lodash')
 
 module.exports = function (options, callback) {
   var params = {
-      client: 'chromium'
-    , lang: 'en-US'
-    , maxResults: 1
-    , pfilter: 1
-    , xjerr: 1
+    client: 'chromium',
+    lang: 'en-US',
+    maxResults: 1,
+    pfilter: 1,
+    xjerr: 1
   };
 
   if (typeof options === 'string') {
@@ -24,9 +24,9 @@ module.exports = function (options, callback) {
   params = _.extend(params, _.pick.apply(this, [options].concat(_.keys(params))));
 
   options = _.defaults(options, params, {
-      clipSize: 15
-    , maxRequests: 4
-    , sampleRate: 16000
+    clipSize: 15,
+    maxRequests: 4,
+    sampleRate: 16000
   });
 
   var headers = {'content-type': 'audio/x-flac; rate=' + options.sampleRate}
