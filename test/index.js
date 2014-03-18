@@ -1,7 +1,6 @@
 var path = require('path')
   , should = require('chai').should()
-  , speech = require('../index')
-  , util = require('util');
+  , speech = require('../index');
 
 describe('speech', function () {
   var en = path.join(__dirname, 'fixtures/en.mp3')
