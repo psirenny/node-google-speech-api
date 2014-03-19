@@ -1,6 +1,8 @@
 Google Speech API
 =================
 
+[![Build Status](https://travis-ci.org/psirenny/node-google-speech-api.png?branch=master)](https://travis-ci.org/psirenny/node-google-speech-api)
+
 Google [Speech API](https://gist.github.com/alotaiba/1730160) wrapper for node.
 It requires [SoX](http://sox.sourceforge.net) compiled with flac support in order to work.
 
