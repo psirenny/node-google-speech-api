@@ -1,0 +1,140 @@
+{
+  "name": "google-speech-api",
+  "version": "0.3.1",
+  "dependencies": {
+    "async": {
+      "version": "0.2.9",
+      "from": "async@*"
+    },
+    "lodash": {
+      "version": "2.4.1",
+      "from": "lodash@*"
+    },
+    "qs": {
+      "version": "0.6.6",
+      "from": "qs@*"
+    },
+    "request": {
+      "version": "2.30.0",
+      "from": "request@*",
+      "dependencies": {
+        "json-stringify-safe": {
+          "version": "5.0.0",
+          "from": "json-stringify-safe@~5.0.0"
+        },
+        "forever-agent": {
+          "version": "0.5.0",
+          "from": "forever-agent@~0.5.0"
+        },
+        "node-uuid": {
+          "version": "1.4.1",
+          "from": "node-uuid@~1.4.0"
+        },
+        "mime": {
+          "version": "1.2.11",
+          "from": "mime@~1.2.9"
+        },
+        "tough-cookie": {
+          "version": "0.9.15",
+          "from": "tough-cookie@~0.9.15",
+          "dependencies": {
+            "punycode": {
+              "version": "1.2.3",
+              "from": "punycode@>=0.2.0"
+            }
+          }
+        },
+        "form-data": {
+          "version": "0.1.2",
+          "from": "form-data@~0.1.0",
+          "dependencies": {
+            "combined-stream": {
+              "version": "0.0.4",
+              "from": "combined-stream@~0.0.4",
+              "dependencies": {
+                "delayed-stream": {
+                  "version": "0.0.5",
+                  "from": "delayed-stream@0.0.5"
+                }
+              }
+            }
+          }
+        },
+        "tunnel-agent": {
+          "version": "0.3.0",
+          "from": "tunnel-agent@~0.3.0"
+        },
+        "http-signature": {
+          "version": "0.10.0",
+          "from": "http-signature@~0.10.0",
+          "dependencies": {
+            "assert-plus": {
+              "version": "0.1.2",
+              "from": "assert-plus@0.1.2"
+            },
+            "asn1": {
+              "version": "0.1.11",
+              "from": "asn1@0.1.11"
+            },
+            "ctype": {
+              "version": "0.5.2",
+              "from": "ctype@0.5.2"
+            }
+          }
+        },
+        "oauth-sign": {
+          "version": "0.3.0",
+          "from": "oauth-sign@~0.3.0"
+        },
+        "hawk": {
+          "version": "1.0.0",
+          "from": "hawk@~1.0.0",
+          "dependencies": {
+            "hoek": {
+              "version": "0.9.1",
+              "from": "hoek@0.9.x"
+            },
+            "boom": {
+              "version": "0.4.2",
+              "from": "boom@0.4.x"
+            },
+            "cryptiles": {
+              "version": "0.2.2",
+              "from": "cryptiles@0.2.x"
+            },
+            "sntp": {
+              "version": "0.2.4",
+              "from": "sntp@0.2.x"
+            }
+          }
+        },
+        "aws-sign2": {
+          "version": "0.5.0",
+          "from": "aws-sign2@~0.5.0"
+        }
+      }
+    },
+    "temp": {
+      "version": "0.6.0",
+      "from": "temp@*",
+      "resolved": "https://registry.npmjs.org/temp/-/temp-0.6.0.tgz",
+      "dependencies": {
+        "rimraf": {
+          "version": "2.1.4",
+          "from": "rimraf@~2.1.4",
+          "resolved": "https://registry.npmjs.org/rimraf/-/rimraf-2.1.4.tgz",
+          "dependencies": {
+            "graceful-fs": {
+              "version": "1.2.3",
+              "from": "graceful-fs@~1"
+            }
+          }
+        },
+        "osenv": {
+          "version": "0.0.3",
+          "from": "osenv@0.0.3"
+        }
+      }
+    }
+  }
+}
