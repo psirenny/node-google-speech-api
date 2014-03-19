@@ -12,6 +12,9 @@
     "chai": "*",
     "mocha": "*"
   },
+  "engines": {
+    "node": ">=0.8.x"
+  },
   "gitHead": "a5094705349adf734ca3c9f8a2accfb4db2fbd04",
   "keywords": [
     "node",
