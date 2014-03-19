@@ -4,7 +4,7 @@ node_js:
   - '0.10'
   - '0.8'
   - '0.6'
-before_isntall:
+before_install:
   - sudo apt-get update
   - sudo apt-get install build-essential fakeroot dpkg-dev devscripts
   - sudo apt-get build-dep sox
