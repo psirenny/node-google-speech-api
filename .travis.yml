@@ -17,3 +17,4 @@ before_install:
   - fakeroot debian/rules binary
   - sudo dpkg -i ../*.deb
   - fakeroot debian/rules clean
+  - cd ..
