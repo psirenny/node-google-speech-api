@@ -2,6 +2,7 @@
   "author": "psirenny",
   "dependencies": {
     "async": "*",
+    "google-speech-format": "*",
     "lodash": "*",
     "qs": "*",
     "request": "*",

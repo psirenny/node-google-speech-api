@@ -2,6 +2,7 @@ var _ = require('lodash')
   , async = require('async')
   , exec = require('child_process').exec
   , fs = require('fs')
+  , format = require('google-speech-format')
   , path = require('path')
   , qs = require('qs')
   , request = require('request')
@@ -56,37 +57,8 @@ module.exports = function (options, callback) {
     });
   };
 
-  // get audio duration
-  var cmd = util.format('sox --i -D "%s"', options.file);
-
-  exec(cmd, function (err, duration) {
+  format(options, function (err, files) {
     if (err) return callback(err);
-
-    // normalize audio
-    var output = temp.path();
-    cmd = util.format('sox "%s" -r %d "%s.flac" gain -n -5 silence 1 5 2%%', options.file, options.sampleRate, output);
-
-    exec(cmd, function (err) {
-      if (err) return callback(err);
-
-      // split into 15 second sound clips
-      cmd = util.format('sox "%s.flac" "%s%%1n.flac" trim 0 %d : newfile : restart', output, output, options.clipSize);
-
-      exec(cmd, function (err) {
-        fs.unlink(output + '.flac');
-        if (err) return callback(err);
-
-        var files = []
-          , count = Math.ceil(duration / options.clipSize);
-
-        // push sound clip file names to array
-        _.times(count, function (n) {
-          files.push(output + (n + 1) + '.flac');
-        });
-
-        // get speech for each sound clip
-        async.mapLimit(files, options.maxRequests, getSpeech, callback);
-      });
-    });
+    async.mapLimit(files, options.maxRequests, getSpeech, callback);
   });
 };
