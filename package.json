@@ -5,8 +5,7 @@
     "google-speech-format": "*",
     "lodash": "*",
     "qs": "*",
-    "request": "*",
-    "temp": "*"
+    "request": "*"
   },
   "description": "Google Speech API wrapper for node",
   "devDependencies": {

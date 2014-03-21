@@ -1,13 +1,9 @@
 var _ = require('lodash')
   , async = require('async')
-  , exec = require('child_process').exec
   , fs = require('fs')
   , format = require('google-speech-format')
-  , path = require('path')
   , qs = require('qs')
-  , request = require('request')
-  , temp = require('temp')
-  , util = require('util')
+  , request = require('request');
 
 module.exports = function (options, callback) {
   var params = {
