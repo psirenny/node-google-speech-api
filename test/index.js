@@ -43,12 +43,12 @@ describe('speech', function () {
   it('should censor profanity', function (done) {
     this.timeout(3000);
     var opts = {file: profanity, pfilter: true};
-    speech(opts, check('the f*** out my face with that s***', done));
+    speech(opts, check('f*** you', done));
   });
 
   it('should not censor profanity', function (done) {
     this.timeout(3000);
     var opts = {file: profanity, pfilter: false};
-    speech(opts, check('the fuck out my face with that shit', done));
+    speech(opts, check('fuck you', done));
   });
 });
