@@ -1,11 +1,11 @@
 var _ = require('lodash')
+  , natural = require('natural')
   , path = require('path')
   , should = require('chai').should()
   , speech = require('../index')
   , en = path.join(__dirname, 'fixtures/en.mp3')
   , es = path.join(__dirname, 'fixtures/es.mp3')
   , lengthy = path.join(__dirname, 'fixtures/lengthy.mp3')
-  , natural = require('natural')
   , profanity = path.join(__dirname, 'fixtures/profanity.mp3');
 
 function combine(utterance, res) {
