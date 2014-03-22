@@ -5,11 +5,13 @@
     "google-speech-format": "*",
     "lodash": "*",
     "qs": "*",
-    "request": "*"
+    "request": "*",
+    "through": "*"
   },
   "description": "Google Speech API wrapper for node",
   "devDependencies": {
     "chai": "*",
+    "concat-stream": "*",
     "mocha": "*",
     "natural": "*"
   },
