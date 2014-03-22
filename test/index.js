@@ -5,6 +5,7 @@ var _ = require('lodash')
   , en = path.join(__dirname, 'fixtures/en.mp3')
   , es = path.join(__dirname, 'fixtures/es.mp3')
   , lengthy = path.join(__dirname, 'fixtures/lengthy.mp3')
+  , natural = require('natural')
   , profanity = path.join(__dirname, 'fixtures/profanity.mp3');
 
 function combine(utterance, res) {
@@ -21,7 +22,8 @@ function check(text, done) {
     res[0].hypotheses.should.be.an('array');
     res[0].hypotheses[0].should.be.an('object');
     var sentence = _.reduce(res, combine, '');
-    sentence.should.equal(text);
+    var distance = natural.JaroWinklerDistance(sentence, text);
+    distance.should.be.at.least(.8);
     done();
   };
 }

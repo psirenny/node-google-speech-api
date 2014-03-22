@@ -10,7 +10,8 @@
   "description": "Google Speech API wrapper for node",
   "devDependencies": {
     "chai": "*",
-    "mocha": "*"
+    "mocha": "*",
+    "natural": "*"
   },
   "engines": {
     "node": ">=0.8.x"
