@@ -1,9 +1,16 @@
-var path = require('path')
+var _ = require('lodash')
+  , path = require('path')
   , should = require('chai').should()
   , speech = require('../index')
   , en = path.join(__dirname, 'fixtures/en.mp3')
   , es = path.join(__dirname, 'fixtures/es.mp3')
+  , lengthy = path.join(__dirname, 'fixtures/lengthy.mp3')
   , profanity = path.join(__dirname, 'fixtures/profanity.mp3');
+
+function combine(utterance, res) {
+  var space = utterance ? ' ' : '';
+  return utterance + space + res.hypotheses[0].utterance;
+}
 
 function check(text, done) {
   return function (err, res) {
@@ -13,7 +20,8 @@ function check(text, done) {
     res[0].status.should.equal(0);
     res[0].hypotheses.should.be.an('array');
     res[0].hypotheses[0].should.be.an('object');
-    res[0].hypotheses[0].utterance.should.equal(text);
+    var sentence = _.reduce(res, combine, '');
+    sentence.should.equal(text);
     done();
   };
 }
@@ -50,5 +58,11 @@ describe('speech', function () {
     this.timeout(3000);
     var opts = {file: profanity, pfilter: false};
     speech(opts, check('fuck you', done));
+  });
+
+  it('should clip long audio', function (done) {
+    this.timeout(12000);
+    var opts = {file: lengthy};
+    speech(opts, check('1 of the Iliad of Homer rendered into English flag vs spy Edward Earl of Derby this is a liberal Vox recording recordings are in the public domain for more information or to volunteer please visit fox.org', done));
   });
 });
