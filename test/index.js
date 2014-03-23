@@ -45,7 +45,7 @@ describe('speech', function () {
   it('should take an object', function (done) {
     this.timeout(2000);
     var opts = {file: en};
-    check(en, 'thank you very much', done);
+    check(opts, 'thank you very much', done);
   });
 
   it('should work in another language', function (done) {
