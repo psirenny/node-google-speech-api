@@ -1,19 +1,22 @@
 language: node_js
 node_js:
-  - '0.11'
-  - '0.10'
-  - '0.8'
+- '0.11'
+- '0.10'
+- '0.8'
 before_install:
-  - sudo apt-get update
-  - sudo apt-get install build-essential fakeroot dpkg-dev devscripts
-  - sudo apt-get build-dep sox
-  - sudo apt-get install libmp3lame-dev
-  - apt-get source sox
-  - cd sox-*
-  - sed -i 's/--without-lame //' debian/rules
-  - sed -i 's/libmagic-dev, /libmagic-dev, libmp3lame-dev, /' debian/control
-  - sed -i 's/Write support not available yet.//' debian/control
-  - fakeroot debian/rules binary
-  - sudo dpkg -i ../*.deb
-  - fakeroot debian/rules clean
-  - cd ..
+- sudo apt-get update
+- sudo apt-get install build-essential fakeroot dpkg-dev devscripts
+- sudo apt-get build-dep sox
+- sudo apt-get install libmp3lame-dev
+- apt-get source sox
+- cd sox-*
+- sed -i 's/--without-lame //' debian/rules
+- sed -i 's/libmagic-dev, /libmagic-dev, libmp3lame-dev, /' debian/control
+- sed -i 's/Write support not available yet.//' debian/control
+- fakeroot debian/rules binary
+- sudo dpkg -i ../*.deb
+- fakeroot debian/rules clean
+- cd ..
+env:
+  global:
+    secure: P2wohj9WAZOnI9FLoHs7kS95mvWXvSuC528j12cuNQ4p60gWjxsrKQVxJ3AYNQ4NQKP5dtVNg+V5c0hWfSqGZSP96mryoahBQXsz26Cu8jGr8Y+HsVBPSnKvrW9rpuzyo8XbVPce+UVseAgIz9I2LP8OySUDjeYZhEjbbVwY7Tg=

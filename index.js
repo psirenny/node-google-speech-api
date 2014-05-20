@@ -8,16 +8,15 @@ var _ = require('lodash')
 
 module.exports = function (options, callback) {
   var params = {
+    app: '',
     client: 'chromium',
+    key: '',
     lang: 'en-US',
     maxResults: 1,
+    output: 'json',
     pfilter: 1,
     xjerr: 1
   };
-
-  if (typeof options === 'string') {
-    options = {file: options};
-  }
 
   params = _.extend(params, _.pick.apply(this, [options].concat(_.keys(params))));
   params.pfilter = params.pfilter ? 1 : 0;
@@ -30,7 +29,7 @@ module.exports = function (options, callback) {
 
   var headers = {'content-type': 'audio/x-flac; rate=' + options.sampleRate}
     , stream = through().pause()
-    , url = 'https://www.google.com/speech-api/v1/recognize?' + qs.stringify(params);
+    , url = 'https://www.google.com/speech-api/v2/recognize?' + qs.stringify(params);
 
   function getSpeech(file, callback) {
     fs.readFile(file, function (err, data) {
@@ -39,8 +38,8 @@ module.exports = function (options, callback) {
       request.post({body: data, headers: headers, url: url},
         function (err, res, body) {
           if (err) return callback(err);
-          if (!!~body.toLowerCase().indexOf('html')) return callback(body);
-          body = _(body.split('\n')).compact().join(',');
+          if (/<!DOCTYPE html>/i.test(body)) return callback(body);
+          body = _.last(body.split('\n'), 2)[0];
 
           try {
             callback(null, JSON.parse(body));
