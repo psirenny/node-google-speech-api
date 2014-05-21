@@ -10,8 +10,9 @@ It requires [SoX](http://sox.sourceforge.net) compiled with flac support in orde
 ----------
 
 The google speech api now requires an api key in order to work.
-You'll have to create an app in the Google Developers Console and enable the speech api.
-In order to enable the api for your app you have to join the *chromium dev-list* in google groups.
+You'll have to create an app in the Google Developers Console and enable the speech api.  
+
+To enable the speech api in the developer console for you must join the **chromium dev-list** in google groups.
 See [these comments](http://mikepultz.com/2013/07/google-speech-api-full-duplex-php-version) for more details.
 
 Usage
