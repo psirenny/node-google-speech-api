@@ -6,15 +6,28 @@ Google Speech API
 Google [Speech API](https://gist.github.com/alotaiba/1730160) wrapper for node.
 It requires [SoX](http://sox.sourceforge.net) compiled with flac support in order to work.
 
+0.5 Update
+----------
+
+The google speech api now requires an api key in order to work.
+You'll have to create an app in the Google Developers Console and enable the speech api.
+In order to enable the api for your app you have to join the *chromium dev-list* in google groups.
+See [these comments](http://mikepultz.com/2013/07/google-speech-api-full-duplex-php-version) for more details.
+
 Usage
 -----
 
 ```javascript
 var speech = require('google-speech-api');
 
-speech('/path/to/audio/file', function (err, results) {
+var opts = {
+  file: 'speech.mp3',
+  key: '<Google API Key>'
+};
+
+speech(opts, function (err, results) {
   console.log(results);
-  // [{status: 0, id: '...', hypotheses: [{utterance: 'this is a test', confidence: 0.9162679}]}]}]
+  // [{result: [{alternative: [{transcript: '...'}]}]}]
 });
 ```
 
@@ -22,25 +35,13 @@ Options
 -------
 
 You can specify several options:
+* clipSize — The audio duration of files sent to google (in seconds.) Larger files will be broken into pieces. (defaults to 15)
+* **file** — The audio file path (required)
+* **key** — Your google API key (required)
 * client — The name of the client you are connecting with. (defaults to "chromium")
 * lang — The spoken language in the file. (defaults to "en-US")
+* maxRequests — The maximum number of clips to send to google at a time. (defaults to 4)
 * maxResults — The maximum number of hypotheses returned by google. (defaults to 1)
 * pfilter — Filter profanity by replacing flagged words with pound symbols. Set 0 to unfilter. (defaults to 1)
-* clipSize — The audio duration of files sent to google (in seconds.) Larger files will be broken into pieces. (defaults to 15)
-* maxRequests — The maximum number of clips to send to google at a time. (defaults to 4)
 * sampleRate — The sample rate of the audio sent to google. (defaults to 16000)
 * xjerr — Return errors as part of the JSON response if set to 1, otherwise returns errors as HTTP error codes. (defaults to 1)
-
-```javascript
-var options = {
-  file: '/wavs/arnold/whoisyourdaddy.wav',
-  lang: 'en-US',
-  clipSize: 45,
-  maxRequests: 20
-}
-
-speech(options, function (err, results) {
-  if (err) return console.error(err);
-  console.log(results);
-});
-```
