@@ -19,4 +19,4 @@ before_install:
 - cd ..
 env:
   global:
-    secure: P2wohj9WAZOnI9FLoHs7kS95mvWXvSuC528j12cuNQ4p60gWjxsrKQVxJ3AYNQ4NQKP5dtVNg+V5c0hWfSqGZSP96mryoahBQXsz26Cu8jGr8Y+HsVBPSnKvrW9rpuzyo8XbVPce+UVseAgIz9I2LP8OySUDjeYZhEjbbVwY7Tg=
+    secure: HCtVcQylfeCzIDkC7OWGcfGm3j5c5eFVqoazaJ7zULdZa4vuy5bvLlkGv9B4gx82Jrs+boYPkqAymoRmTqB/vjdWbXkYHwerwZSOqYzbXKPXKSX2g6eqzY5OD1vsEWcE33hcnu2dbfMmh1D/Q+TpwOSHtvoZH9oYOfR3P7GwWls=
