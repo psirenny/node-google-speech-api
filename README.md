@@ -37,8 +37,8 @@ Options
 
 You can specify several options:
 * clipSize — The audio duration of files sent to google (in seconds.) Larger files will be broken into pieces. (defaults to 15)
-* **file** — The audio file path (required)
-* **key** — Your google API key (required)
+* ***file*** — The audio file path (required)
+* ***key*** — Your google API key (required)
 * client — The name of the client you are connecting with. (defaults to "chromium")
 * lang — The spoken language in the file. (defaults to "en-US")
 * maxRequests — The maximum number of clips to send to google at a time. (defaults to 4)
