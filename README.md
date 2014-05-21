@@ -9,14 +9,14 @@ It requires [SoX](http://sox.sourceforge.net) compiled with flac support in orde
 0.5 Update
 ----------
 
-The google speech api now requires an **API Key** in order to work.
+The google speech api now requires an **API Key**.
 You'll have to create an app in the Google Developers Console and enable the speech api.  
 
-To enable the speech api in the developer console for you must join the **chromium dev-list** in google groups.
+To enable the speech api in the developer console you must join the **chromium dev-list** in google groups.
 See [these comments](http://mikepultz.com/2013/07/google-speech-api-full-duplex-php-version/#comments) for more details.  
 
 The response format has also changed.
-Instead of returning *utterances*, google now returns alternatives with *transcripts*.
+Instead of returning *utterances*, google now returns alternatives with a *transcript*.
 See the example below.
 
 Usage
