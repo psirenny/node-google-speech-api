@@ -13,7 +13,7 @@ The google speech api now requires an api key in order to work.
 You'll have to create an app in the Google Developers Console and enable the speech api.  
 
 To enable the speech api in the developer console for you must join the **chromium dev-list** in google groups.
-See [these comments](http://mikepultz.com/2013/07/google-speech-api-full-duplex-php-version) for more details.
+See [these comments](http://mikepultz.com/2013/07/google-speech-api-full-duplex-php-version/#comments) for more details.
 
 Usage
 -----
