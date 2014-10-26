@@ -40,7 +40,7 @@ module.exports = function (options, callback) {
   // concatenates all of it and then closes the read stream
   var writeStream = concat(function (data) {
     options.file = data;
-    read.end();
+    readStream.end();
   });
 
   var headers = {'content-type': 'audio/x-flac; rate=' + options.sampleRate};
