@@ -17,7 +17,7 @@
     "natural": "^0.1.28"
   },
   "engines": {
-    "node": ">=0.8.x"
+    "node": ">=0.10.x"
   },
   "gitHead": "a5094705349adf734ca3c9f8a2accfb4db2fbd04",
   "keywords": [
@@ -37,5 +37,5 @@
   "scripts": {
     "test": "./node_modules/.bin/mocha test"
   },
-  "version": "0.6.1"
+  "version": "0.6.2"
 }
