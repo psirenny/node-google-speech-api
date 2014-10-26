@@ -1,10 +1,12 @@
-var _ = require('lodash')
-  , async = require('async')
-  , fs = require('fs')
-  , format = require('google-speech-format')
-  , qs = require('qs')
-  , request = require('request')
-  , through = require('through');
+var _ = require('lodash');
+var async = require('async');
+var concat = require('concat-stream');
+var duplexer = require('duplexer');
+var fs = require('fs');
+var format = require('google-speech-format');
+var qs = require('qs');
+var request = require('request');
+var through = require('through');
 
 module.exports = function (options, callback) {
   var params = {
@@ -27,9 +29,24 @@ module.exports = function (options, callback) {
     sampleRate: 16000
   });
 
-  var headers = {'content-type': 'audio/x-flac; rate=' + options.sampleRate}
-    , stream = through().pause()
-    , url = 'https://www.google.com/speech-api/v2/recognize?' + qs.stringify(params);
+  // create a readable stream that fetches speech
+  // from the google speech api when it is closed
+  var readStream = through(null, function () {
+    this.queue(null);
+    start();
+  });
+
+  // create a writeable stream that receives audio data,
+  // concatenates all of it and then closes the read stream
+  var writeStream = concat(function (data) {
+    options.file = data;
+    read.end();
+  });
+
+  var headers = {'content-type': 'audio/x-flac; rate=' + options.sampleRate};
+  var url = 'https://www.google.com/speech-api/v2/recognize?' + qs.stringify(params);
+  var stream = duplexer(writeStream, readStream);
+  stream.pause();
 
   function getSpeech(file, callback) {
     fs.readFile(file, function (err, data) {
@@ -52,17 +69,23 @@ module.exports = function (options, callback) {
           }
       });
     });
-  };
+  }
 
-  function onEnd(err, res) {
+  function end(err, res) {
     callback(err, res);
     stream.resume().queue(JSON.stringify(res)).end();
   }
 
-  format(options, function (err, files) {
-    if (err) return callback(err);
-    async.mapLimit(files, options.maxRequests, getSpeech, onEnd);
-  });
+  function start() {
+    format(options, function (err, files) {
+      if (err) return callback(err);
+      async.mapLimit(files, options.maxRequests, getSpeech, end);
+    });
+  }
 
+  // call the api if a file is provided
+  if (options.file) start();
+
+  // otherwise, wait for data to be piped to the write stream
   return stream;
 };

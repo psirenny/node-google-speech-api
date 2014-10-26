@@ -1,13 +1,13 @@
-var _ = require('lodash')
-  , concat = require('concat-stream')
-  , natural = require('natural')
-  , path = require('path')
-  , should = require('chai').should()
-  , speech = require('../index')
-  , en = path.join(__dirname, 'fixtures/en.mp3')
-  , es = path.join(__dirname, 'fixtures/es.mp3')
-  , lengthy = path.join(__dirname, 'fixtures/lengthy.mp3')
-  , profanity = path.join(__dirname, 'fixtures/profanity.mp3');
+var _ = require('lodash');
+var concat = require('concat-stream');
+var natural = require('natural');
+var path = require('path');
+var should = require('chai').should();
+var speech = require('../index');
+var en = path.join(__dirname, 'fixtures/en.mp3');
+var es = path.join(__dirname, 'fixtures/es.mp3');
+var lengthy = path.join(__dirname, 'fixtures/lengthy.mp3');
+var profanity = path.join(__dirname, 'fixtures/profanity.mp3');
 
 function combine(utterance, res) {
   var space = utterance ? ' ' : '';
@@ -16,16 +16,16 @@ function combine(utterance, res) {
 }
 
 function check(opts, text, done) {
-  opts.accuracy = opts.accuracy || .8;
+  opts.accuracy = opts.accuracy || 0.8;
   opts.key = process.env.GOOGLE_API_KEY;
-  var stream = speech(opts, function (err, res) {
+  var stream = speech(opts, function (err, results) {
     if (err) throw err;
     stream.pipe(concat(function (data) {
-      res.should.deep.equal(JSON.parse(data));
-      res.should.be.an('array');
-      res[0].should.be.an('object');
-      res[0].result.should.an('array');
-      var sentence = _.reduce(res, combine, '');
+      results.should.deep.equal(JSON.parse(data));
+      results.should.be.an('array');
+      results[0].should.be.an('object');
+      results[0].result.should.an('array');
+      var sentence = _.reduce(results, combine, '');
       var distance = natural.JaroWinklerDistance(sentence, text);
       distance.should.be.at.least(opts.accuracy);
       done();
@@ -33,7 +33,7 @@ function check(opts, text, done) {
   });
 }
 
-describe('speech', function () {
+describe('google speech api', function () {
   it('should be a function', function () {
     speech.should.be.a('function');
   });
@@ -64,7 +64,7 @@ describe('speech', function () {
 
   it('should clip long audio', function (done) {
     this.timeout(12000);
-    var opts = {accuracy: .3, file: lengthy};
+    var opts = {accuracy: 0.3, file: lengthy};
     check(opts, '1 of the Iliad of Homer rendered into English flag vs spy Edward Earl of Derby this is a liberal Vox recording recordings are in the public domain for more information or to volunteer please visit fox.org', done);
   });
 });

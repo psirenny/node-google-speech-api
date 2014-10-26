@@ -1,19 +1,20 @@
 {
-  "author": "psirenny",
+  "author": "Dennis Torres <djtorres0@gmail.com>",
   "dependencies": {
-    "async": "*",
-    "google-speech-format": "*",
-    "lodash": "*",
-    "qs": "*",
-    "request": "*",
-    "through": "*"
+    "async": "https://registry.npmjs.org/async/-/async-0.2.9.tgz",
+    "concat-stream": "^1.4.6",
+    "duplexer": "^0.1.1",
+    "google-speech-format": "^0.2.0",
+    "lodash": "https://registry.npmjs.org/lodash/-/lodash-2.4.1.tgz",
+    "qs": "^0.6.6",
+    "request": "https://registry.npmjs.org/request/-/request-2.30.0.tgz",
+    "through": "^2.3.4"
   },
   "description": "Google Speech API wrapper for node",
   "devDependencies": {
-    "chai": "*",
-    "concat-stream": "*",
-    "mocha": "*",
-    "natural": "*"
+    "chai": "^1.9.2",
+    "mocha": "^2.0.1",
+    "natural": "^0.1.28"
   },
   "engines": {
     "node": ">=0.8.x"
@@ -36,5 +37,5 @@
   "scripts": {
     "test": "./node_modules/.bin/mocha test"
   },
-  "version": "0.5.0"
+  "version": "0.6.0"
 }

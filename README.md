@@ -36,14 +36,32 @@ speech(opts, function (err, results) {
 });
 ```
 
+Piping
+------
+
+You can pipe data:
+
+    var request = require('superagent');
+    var speech = require('google-speech-api');
+
+    // must specify the filetype when piping
+    var opts = {filetype: 'mp3'};
+
+    request
+      .get('http://../../file.mp3')
+      .pipe(speech(opts, function (err, results) {
+        // handle the results
+      }));
+
 Options
 -------
 
 You can specify several options:
 * clipSize — The audio duration of files sent to google (in seconds.) Larger files will be broken into pieces. (defaults to 15)
-* ***file*** — The audio file path. (required)
+* ***file*** — The audio file. May be a `string` path or a `Buffer` object. (required)
 * ***key*** — Your google API key. (required)
 * client — The name of the client you are connecting with. (defaults to "chromium")
+* filetype — Specify the file type. Required when piping or if the file is a buffer object.
 * lang — The spoken language in the file. (defaults to "en-US")
 * maxRequests — The maximum number of clips to send to google at a time. (defaults to 4)
 * maxResults — The maximum number of hypotheses returned by google. (defaults to 1)
