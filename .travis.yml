@@ -1,21 +1,16 @@
 language: node_js
 node_js:
-- '0.11'
-- '0.10'
+  - '0.11'
+  - '0.10'
 before_install:
-- sudo apt-get update
-- sudo apt-get install build-essential fakeroot dpkg-dev devscripts
-- sudo apt-get build-dep sox
-- sudo apt-get install libmp3lame-dev
-- apt-get source sox
-- cd sox-*
-- sed -i 's/--without-lame //' debian/rules
-- sed -i 's/libmagic-dev, /libmagic-dev, libmp3lame-dev, /' debian/control
-- sed -i 's/Write support not available yet.//' debian/control
-- fakeroot debian/rules binary
-- sudo dpkg -i ../*.deb
-- fakeroot debian/rules clean
-- cd ..
+  - sudo add-apt-repository -y ppa:jon-severinsson/ffmpeg
+  - sudo apt-get update
+  - sudo apt-get -y install wget tar bzip2 flvtool2 ffmpeg
+  - wget http://ffmpeg.gusari.org/static/64bit/ffmpeg.static.64bit.latest.tar.gz
+  - tar zxf ffmpeg.static.64bit.latest.tar.gz
+  - sudo cp ffmpeg ffprobe /usr/bin
+  - export ALT_FFMPEG_PATH=$(pwd)/ffmpeg
+  - export ALT_FFPROBE_PATH=$(pwd)/ffprobe
 env:
   global:
     secure: HCtVcQylfeCzIDkC7OWGcfGm3j5c5eFVqoazaJ7zULdZa4vuy5bvLlkGv9B4gx82Jrs+boYPkqAymoRmTqB/vjdWbXkYHwerwZSOqYzbXKPXKSX2g6eqzY5OD1vsEWcE33hcnu2dbfMmh1D/Q+TpwOSHtvoZH9oYOfR3P7GwWls=
