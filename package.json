@@ -4,7 +4,7 @@
     "async": "https://registry.npmjs.org/async/-/async-0.2.9.tgz",
     "concat-stream": "^1.4.6",
     "duplexer": "^0.1.1",
-    "google-speech-format": "^0.2.0",
+    "google-speech-format": "^1.0.0",
     "lodash": "https://registry.npmjs.org/lodash/-/lodash-2.4.1.tgz",
     "qs": "^0.6.6",
     "request": "https://registry.npmjs.org/request/-/request-2.30.0.tgz",
@@ -37,5 +37,5 @@
   "scripts": {
     "test": "./node_modules/.bin/mocha test"
   },
-  "version": "0.6.2"
+  "version": "1.0.0"
 }

@@ -4,7 +4,12 @@ Google Speech API
 [![Build Status](https://travis-ci.org/psirenny/node-google-speech-api.png?branch=master)](https://travis-ci.org/psirenny/node-google-speech-api)
 
 Google [Speech API](https://gist.github.com/alotaiba/1730160) wrapper for node.
-It requires [SoX](http://sox.sourceforge.net) compiled with flac support in order to work.
+It requires [FFmpeg](https://www.ffmpeg.org) compiled with flac support in order to work.
+
+1.0.0 Update
+------------
+
+Switched from SoX to FFmpeg. Make sure you have at least version 0.9 of ffmpeg.
 
 0.5 Update
 ----------

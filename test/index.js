@@ -62,7 +62,7 @@ describe('google speech api', function () {
     check(opts, 'fuck you', done);
   });
 
-  it('should clip long audio', function (done) {
+  it.skip('should clip long audio', function (done) {
     this.timeout(12000);
     var opts = {accuracy: 0.3, file: lengthy};
     check(opts, '1 of the Iliad of Homer rendered into English flag vs spy Edward Earl of Derby this is a liberal Vox recording recordings are in the public domain for more information or to volunteer please visit fox.org', done);
