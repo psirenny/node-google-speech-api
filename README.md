@@ -27,6 +27,8 @@ See the example below.
 Usage
 -----
 
+See 'example' folder for a fully functional example. (rename '_keys.txt' to 'keys.txt' and insert your Google API Key)
+
 ```javascript
 var speech = require('google-speech-api');
 
@@ -46,6 +48,7 @@ Piping
 
 You can pipe data:
 
+```javascript
     var request = require('superagent');
     var speech = require('google-speech-api');
 
@@ -57,6 +60,7 @@ You can pipe data:
       .pipe(speech(opts, function (err, results) {
         // handle the results
       }));
+```
 
 Options
 -------
