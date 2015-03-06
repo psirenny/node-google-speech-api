@@ -20,12 +20,16 @@ You'll have to create an app in the Google Developers Console and enable the spe
 To enable the speech api in the developer console you must join the **chromium dev-list** in google groups.
 See [these comments](http://mikepultz.com/2013/07/google-speech-api-full-duplex-php-version/#comments) for more details.  
 
+More details on how to generate you Google API Key can be found [here](http://www.chromium.org/developers/how-tos/api-keys).
+
 The response format has also changed.
 Instead of returning *utterances*, google now returns alternatives with a *transcript*.
 See the example below.
 
 Usage
 -----
+
+See 'example' folder for a fully functional example. (rename '_keys.txt' to 'keys.txt' and insert your Google API Key)
 
 ```javascript
 var speech = require('google-speech-api');
@@ -46,6 +50,7 @@ Piping
 
 You can pipe data:
 
+```javascript
     var request = require('superagent');
     var speech = require('google-speech-api');
 
@@ -57,6 +62,7 @@ You can pipe data:
       .pipe(speech(opts, function (err, results) {
         // handle the results
       }));
+```
 
 Options
 -------

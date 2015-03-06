@@ -33,7 +33,6 @@ module.exports = function (options, callback) {
   // from the google speech api when it is closed
   var readStream = through(null, function () {
     this.queue(null);
-    start();
   });
 
   // create a writeable stream that receives audio data,
