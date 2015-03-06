@@ -20,6 +20,8 @@ You'll have to create an app in the Google Developers Console and enable the spe
 To enable the speech api in the developer console you must join the **chromium dev-list** in google groups.
 See [these comments](http://mikepultz.com/2013/07/google-speech-api-full-duplex-php-version/#comments) for more details.  
 
+More details on how to generate you Google API Key can be found [here](http://www.chromium.org/developers/how-tos/api-keys).
+
 The response format has also changed.
 Instead of returning *utterances*, google now returns alternatives with a *transcript*.
 See the example below.
