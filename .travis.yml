@@ -1,5 +1,6 @@
 language: node_js
 node_js:
+  - '0.12'
   - '0.11'
   - '0.10'
 before_install:
@@ -11,6 +12,3 @@ before_install:
   - sudo cp ffmpeg ffprobe /usr/bin
   - export ALT_FFMPEG_PATH=$(pwd)/ffmpeg
   - export ALT_FFPROBE_PATH=$(pwd)/ffprobe
-env:
-  global:
-    secure: HCtVcQylfeCzIDkC7OWGcfGm3j5c5eFVqoazaJ7zULdZa4vuy5bvLlkGv9B4gx82Jrs+boYPkqAymoRmTqB/vjdWbXkYHwerwZSOqYzbXKPXKSX2g6eqzY5OD1vsEWcE33hcnu2dbfMmh1D/Q+TpwOSHtvoZH9oYOfR3P7GwWls=
