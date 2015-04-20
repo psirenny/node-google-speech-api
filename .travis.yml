@@ -4,7 +4,7 @@ node_js:
 before_install:
   - sudo add-apt-repository -y ppa:samrog131/ppa
   - sudo apt-get update
-  - sudo apt-get -y install wget tar bzip2 flvtool2 ffmpeg-real
+  - sudo apt-get -y install wget tar bzip2 flvtool2 ffmpeg
   - wget http://ffmpeg.gusari.org/static/64bit/ffmpeg.static.64bit.latest.tar.gz
   - tar zxf ffmpeg.static.64bit.latest.tar.gz
   - sudo cp ffmpeg ffprobe /usr/bin
