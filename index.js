@@ -1,91 +1,162 @@
 var _ = require('lodash');
 var async = require('async');
-var concat = require('concat-stream');
-var duplexer = require('duplexer');
+var EventEmitter = require('events').EventEmitter;
+var ffmpeg = require('fluent-ffmpeg');
 var fs = require('fs');
-var format = require('google-speech-format');
-var qs = require('qs');
-var request = require('request');
-var through = require('through');
+var request = require('superagent');
+var temp = require('temp');
+
+var defaults = {
+  client: 'chromium',
+  clipSize: 15,
+  lang: 'en-US',
+  maxRequests: 4,
+  maxResults: 1,
+  pfilter: 1,
+  sampleRate: 44000,
+  xjerr: 1
+};
 
 module.exports = function (options, callback) {
-  var params = {
-    app: '',
-    client: 'chromium',
-    key: '',
-    lang: 'en-US',
-    maxResults: 1,
-    output: 'json',
-    pfilter: 1,
-    xjerr: 1
+  var opts = _.merge({}, defaults, options || {});
+  var finishedReadingFile = false;
+
+  var queue = async.priorityQueue(
+    processClip,
+    opts.maxRequests
+  );
+
+  queue.events = new EventEmitter();
+  queue.results = [];
+
+  var reader = new EventEmitter();
+
+  reader.open = function (file) {
+    var self = this;
+
+    ffmpeg.ffprobe(file, function (err, info) {
+      if (err) return self.emit('error', err);
+      var fileSize = info.format.duration;
+      var clipCount = Math.ceil(fileSize / opts.clipSize);
+      var clips = _.range(clipCount);
+
+      function readClip(i, done) {
+        var output = temp.path({suffix: '.flac'});
+
+        ffmpeg()
+          .on('error', function (err) {
+            self.emit('error', err);
+            done(err);
+          })
+          .on('end', function () {
+            self.emit('clip', output, i)
+            done(null, output);
+          })
+          .input(file)
+          .setStartTime(i * opts.clipSize)
+          .duration(opts.clipSize)
+          .output(output)
+          .audioFrequency(opts.sampleRate)
+          .toFormat('flac')
+          .run();
+      }
+
+      function end() {
+        self.emit('end');
+      }
+
+      async.map(clips, readClip, end);
+    });
+  }
+
+  function processClip(clip, done) {
+    transcribeClip(clip, function (err, result) {
+      fs.unlink(clip);
+      if (!err) return done(null, queue.results.push(result));
+      queue.events.emit('error', err);
+      done(err);
+    });
+  }
+
+  function transcribeClip(clip, done) {
+    fs.readFile(clip, function (err, data) {
+      if (err) return done(err);
+
+      request
+        .post('https://www.google.com/speech-api/v2/recognize')
+        .type('audio/x-flac; rate=' + opts.sampleRate)
+        .parse(request.parse.text)
+        .query({key: opts.key})
+        .query({lang: opts.lang})
+        .query({maxResults: opts.maxResults})
+        .query({pfilter: opts.pfilter ? 1 : 0})
+        .send(data)
+        .end(function (err, res) {
+          var text = res.text;
+          if (err) return done(err);
+          if (text) text = text.split('\n')[1];
+          if (!text) return done(null, {result: []});
+          try {
+            done(null, JSON.parse(text))
+          } catch (ex) {
+            done(ex);
+          }
+        });
+    });
+  }
+
+  reader.on('clip', function (clip, i) {
+    queue.push(clip, i)
+  });
+
+  reader.on('end', function () {
+    finishedReadingFile = true;
+  });
+
+  reader.on('error', function () {
+    callback(err);
+  });
+
+  queue.drain = function () {
+    if (!finishedReadingFile) return;
+    callback(null, queue.results);
   };
 
-  params = _.extend(params, _.pick.apply(this, [options].concat(_.keys(params))));
-  params.pfilter = params.pfilter ? 1 : 0;
-
-  options = _.defaults(options, params, {
-    clipSize: 15,
-    maxRequests: 4,
-    sampleRate: 16000
+  queue.events.on('error', function (err) {
+    queue.kill();
+    callback(err);
   });
 
-  // create a readable stream that fetches speech
-  // from the google speech api when it is closed
-  var readStream = through(null, function () {
-    this.queue(null);
-    start();
+  if (opts.file) {
+    return reader.open(opts.file);
+  }
+
+  var file = temp.openSync().path;
+  var writeStream = fs.createWriteStream(file);
+
+  reader.on('end', function () {
+    fs.unlink(file);
   });
 
-  // create a writeable stream that receives audio data,
-  // concatenates all of it and then closes the read stream
-  var writeStream = concat(function (data) {
-    options.file = data;
-    readStream.end();
+  reader.on('error', function () {
+    fs.unlink(file);
   });
 
-  var headers = {'content-type': 'audio/x-flac; rate=' + options.sampleRate};
-  var url = 'https://www.google.com/speech-api/v2/recognize?' + qs.stringify(params);
-  var stream = duplexer(writeStream, readStream);
-  stream.pause();
+  queue.events.on('error', function () {
+    fs.unlink(file);
+  });
 
-  function getSpeech(file, callback) {
-    fs.readFile(file, function (err, data) {
-      if (err) return callback(err);
+  writeStream.on('end', function () {
+    reader.open(file);
+  });
 
-      request.post({body: data, headers: headers, url: url},
-        function (err, res, body) {
-          if (err) return callback(err);
-          if (/<!DOCTYPE html>/i.test(body)) return callback(body);
-          body = _.last(body.split('\n'), 2)[0];
+  writeStream.on('close', function () {
+    reader.open(file);
+  });
 
-          try {
-            callback(null, JSON.parse(body));
-          }
-          catch (e) {
-            callback(e);
-          }
-          finally {
-            fs.unlink(file);
-          }
-      });
-    });
-  }
+  writeStream.on('error', function () {
+    callback(err);
+  });
 
-  function end(err, res) {
-    callback(err, res);
-    stream.resume().queue(JSON.stringify(res)).end();
-  }
-
-  function start() {
-    format(options, function (err, files) {
-      if (err) return callback(err);
-      async.mapLimit(files, options.maxRequests, getSpeech, end);
-    });
-  }
-
-  // call the api if a file is provided
-  if (options.file) start();
-
-  // otherwise, wait for data to be piped to the write stream
-  return stream;
+  return writeStream;
 };

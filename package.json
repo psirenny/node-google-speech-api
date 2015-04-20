@@ -1,20 +1,16 @@
 {
   "author": "Dennis Torres <djtorres0@gmail.com>",
   "dependencies": {
-    "async": "https://registry.npmjs.org/async/-/async-0.2.9.tgz",
-    "concat-stream": "^1.4.6",
-    "duplexer": "^0.1.1",
-    "google-speech-format": "^1.0.1",
-    "lodash": "https://registry.npmjs.org/lodash/-/lodash-2.4.1.tgz",
-    "qs": "^0.6.6",
-    "request": "https://registry.npmjs.org/request/-/request-2.30.0.tgz",
-    "through": "^2.3.4"
+    "async": "^0.9.0",
+    "fluent-ffmpeg": "^2.0.0-rc3",
+    "lodash": "^3.7.0",
+    "superagent": "git://github.com/psirenny/superagent.git#3332afaf202310e400e16e6f3c5b5ba59cd9f558",
+    "temp": "^0.8.1"
   },
   "description": "Google Speech API wrapper for node",
   "devDependencies": {
-    "chai": "^1.9.2",
-    "mocha": "^2.0.1",
-    "natural": "^0.1.28"
+    "natural": "^0.1.28",
+    "tape": "^4.0.0"
   },
   "engines": {
     "node": ">=0.10.x"
@@ -35,7 +31,7 @@
     "url": "git://github.com/psirenny/node-google-speech-api.git"
   },
   "scripts": {
-    "test": "./node_modules/.bin/mocha test"
+    "test": "node test"
   },
-  "version": "1.0.1"
+  "version": "1.1.0"
 }
