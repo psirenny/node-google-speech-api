@@ -4,7 +4,7 @@
     "async": "^0.9.0",
     "fluent-ffmpeg": "^2.0.0-rc3",
     "lodash": "^3.7.0",
-    "superagent": "git://github.com/psirenny/superagent.git#3332afaf202310e400e16e6f3c5b5ba59cd9f558",
+    "superagent": "git://github.com/visionmedia/superagent.git#308a3d5a37c5e34ba736a9d2d63a5a3763b4ba0c",
     "temp": "^0.8.1"
   },
   "description": "Google Speech API wrapper for node",
@@ -33,5 +33,5 @@
   "scripts": {
     "test": "node test"
   },
-  "version": "1.1.0"
+  "version": "1.1.1"
 }
