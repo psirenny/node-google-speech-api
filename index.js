@@ -49,7 +49,7 @@ module.exports = function (options, callback) {
             done(err);
           })
           .on('end', function () {
-            self.emit('clip', output, i)
+            self.emit('clip', output, i);
             done(null, output);
           })
           .input(file)
@@ -67,7 +67,7 @@ module.exports = function (options, callback) {
 
       async.map(clips, readClip, end);
     });
-  }
+  };
 
   function processClip(clip, done) {
     transcribeClip(clip, function (err, result) {
@@ -97,7 +97,7 @@ module.exports = function (options, callback) {
           if (text) text = text.split('\n')[1];
           if (!text) return done(null, {result: []});
           try {
-            done(null, JSON.parse(text))
+            done(null, JSON.parse(text));
           } catch (ex) {
             done(ex);
           }
@@ -106,14 +106,14 @@ module.exports = function (options, callback) {
   }
 
   reader.on('clip', function (clip, i) {
-    queue.push(clip, i)
+    queue.push(clip, i);
   });
 
   reader.on('end', function () {
     finishedReadingFile = true;
   });
 
-  reader.on('error', function () {
+  reader.on('error', function (err) {
     callback(err);
   });
 
