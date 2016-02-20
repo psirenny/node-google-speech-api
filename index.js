@@ -14,6 +14,7 @@ var defaults = {
   maxResults: 1,
   pfilter: 1,
   sampleRate: 44000,
+  timeout: 6000,
   xjerr: 1
 };
 
@@ -91,9 +92,10 @@ module.exports = function (options, callback) {
         .query({maxResults: opts.maxResults})
         .query({pfilter: opts.pfilter ? 1 : 0})
         .send(data)
+        .timeout(opts.timeout)
         .end(function (err, res) {
-          var text = res.text;
           if (err) return done(err);
+          var text = res.text;
           if (text) text = text.split('\n')[1];
           if (!text) return done(null, {result: []});
           try {

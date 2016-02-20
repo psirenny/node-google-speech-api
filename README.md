@@ -72,3 +72,4 @@ You can specify several options:
 * maxResults — The maximum number of hypotheses returned by google. (defaults to 1)
 * pfilter — Filter profanity by replacing flagged words with pound symbols. Set 0 to unfilter. (defaults to 1)
 * sampleRate — The sample rate of the audio sent to google. (defaults to 44000)
+* timeout — The amount of time to wait for the speech API before timing out (defaults to 6000ms)
